@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class BonusPoolController : Controller
     {
         private readonly IBonusPoolService _bonusPoolService;
@@ -29,7 +29,7 @@ namespace SynetecAssessmentApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CalculateBonus([FromBody] CalculateBonusDto request)
         {
-            if (request.SelectedEmployeeId == 0)
+            if (request == null || request.SelectedEmployeeId == 0)
                 return ErrorResponse();
 
             var employee = await _employeeService.GetEmployee(request.SelectedEmployeeId);
