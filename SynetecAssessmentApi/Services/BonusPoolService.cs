@@ -11,11 +11,11 @@ namespace SynetecAssessmentApi.Services
 {
     public class BonusPoolService : IBonusPoolService
     {
-        public int Calculate(int bonusPoolAmount, int totalSalary, int employeeSalary)
+        public decimal Calculate(int bonusPoolAmount, int totalSalary, int employeeSalary)
         {
             //calculate the bonus allocation for the employee
             var bonusPercentage = (decimal)employeeSalary / (decimal)totalSalary;
-            var bonusAllocation = (int)(bonusPercentage * bonusPoolAmount);
+            var bonusAllocation = bonusPercentage * bonusPoolAmount;
             return bonusAllocation;
         }
     }
