@@ -16,15 +16,16 @@ namespace SynetecAssessmentApi.Test
         [DataRow(1000, 1000, 100, 100)]
         [DataRow(100, 1000, 100, 10)]
         [DataRow(1000, 100, 100, 1000)]
+        [DataRow(123456, 100, 15, 18518.4)]
         public void Calculate_CorrectPercentage(
             int bonusPoolAmount, 
             int totalSalary, 
             int employeeSalary,
-            int expected) 
+            double expected) 
         {
             var bonusService = new BonusPoolService();
             var actual = bonusService.Calculate(bonusPoolAmount, totalSalary, employeeSalary);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual((decimal)expected, actual);
         }
     }
 }
