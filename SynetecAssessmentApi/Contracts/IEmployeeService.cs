@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Contracts
 {
-    public interface IBonusPoolService
+    public interface IEmployeeService
     {
-        BonusPoolCalculatorResultDto Calculate(int bonusPoolAmount, int totalSalary, Employee employee);
+        public Task<List<EmployeeDto>> GetAllEmployees();
+        public int GetTotalSalary();
+        public Task<Employee> GetEmployee(int id);
     }
 }

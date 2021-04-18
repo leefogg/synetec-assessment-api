@@ -32,6 +32,7 @@ namespace SynetecAssessmentApi
             services.AddDbContext<AppDbContext>(options =>
                 options.UseInMemoryDatabase(databaseName: "HrDb"));
             services.AddScoped<IBonusPoolService, BonusPoolService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

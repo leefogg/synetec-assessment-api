@@ -10,25 +10,28 @@ namespace SynetecAssessmentApi.Controllers
     public class BonusPoolController : Controller
     {
         private readonly IBonusPoolService _bonusPoolService;
+        private readonly IEmployeeService _employeeService;
 
-        public BonusPoolController(IBonusPoolService bonusPoolSerivce)
+        public BonusPoolController(IBonusPoolService bonusPoolSerivce, IEmployeeService employeeService)
         {
             _bonusPoolService = bonusPoolSerivce;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
 
-            return Ok(await _bonusPoolService.GetEmployeesAsync());
+            return Ok(await _employeeService.GetAllEmployees());
         }
 
         [HttpPost()]
         public async Task<IActionResult> CalculateBonus([FromBody] CalculateBonusDto request)
         {
-            return Ok(await _bonusPoolService.CalculateAsync(
-                request.TotalBonusPoolAmount,
-                request.SelectedEmployeeId));
+            var employee = await _employeeService.GetEmployee(request.SelectedEmployeeId);
+            var totalSalary = _employeeService.GetTotalSalary();
+            var result = _bonusPoolService.Calculate(request.TotalBonusPoolAmount, totalSalary, employee);
+            return Ok(result);
         }
     }
 }
