@@ -30,9 +30,9 @@ namespace SynetecAssessmentApi.Services
             return employees;
         }
 
-        public async Task<Employee> GetEmployee(int selectedEmployeeId)
+        public Task<Employee> GetEmployee(int selectedEmployeeId)
         {
-            return await _dbContext.Employees
+            return _dbContext.Employees
                 .Include(e => e.Department)
                 .FirstOrDefaultAsync(item => item.Id == selectedEmployeeId);
         }
