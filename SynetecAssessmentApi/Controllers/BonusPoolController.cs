@@ -41,18 +41,7 @@ namespace SynetecAssessmentApi.Controllers
 
             var result = new BonusPoolCalculatorResultDto
             {
-                Employee = new EmployeeDto
-                {
-                    Fullname = employee.Fullname,
-                    JobTitle = employee.JobTitle,
-                    Salary = employee.Salary,
-                    Department = new DepartmentDto
-                    {
-                        Title = employee.Department.Title,
-                        Description = employee.Department.Description
-                    }
-                },
-
+                Employee = new EmployeeDto(employee),
                 Amount = bonusAllocation
             };
 

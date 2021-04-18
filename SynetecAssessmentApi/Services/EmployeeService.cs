@@ -24,17 +24,7 @@ namespace SynetecAssessmentApi.Services
            var employees = _dbContext
                 .Employees
                 .Include(e => e.Department)
-                .Select(employee => new EmployeeDto
-                {
-                    Fullname = employee.Fullname,
-                    JobTitle = employee.JobTitle,
-                    Salary = employee.Salary,
-                    Department = new DepartmentDto
-                    {
-                        Title = employee.Department.Title,
-                        Description = employee.Department.Description
-                    }
-                })
+                .Select(employee => new EmployeeDto(employee))
                 .ToListAsync();
 
             return employees;
