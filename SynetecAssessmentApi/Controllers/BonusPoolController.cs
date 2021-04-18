@@ -2,6 +2,8 @@
 using SynetecAssessmentApi.Contracts;
 using SynetecAssessmentApi.Dtos;
 using SynetecAssessmentApi.Services;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Controllers
@@ -25,13 +27,21 @@ namespace SynetecAssessmentApi.Controllers
             return Ok(await _employeeService.GetAllEmployees());
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> CalculateBonus([FromBody] CalculateBonusDto request)
         {
+            if (request.SelectedEmployeeId == 0)
+                return ErrorResponse();
+
             var employee = await _employeeService.GetEmployee(request.SelectedEmployeeId);
+            if (employee == null)
+                return ErrorResponse();
+
             var totalSalary = _employeeService.GetTotalSalary();
             var result = _bonusPoolService.Calculate(request.TotalBonusPoolAmount, totalSalary, employee);
             return Ok(result);
         }
+
+        private IActionResult ErrorResponse() => StatusCode((int)HttpStatusCode.BadRequest);
     }
 }
