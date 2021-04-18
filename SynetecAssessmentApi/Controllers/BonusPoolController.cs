@@ -23,7 +23,6 @@ namespace SynetecAssessmentApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-
             return Ok(await _employeeService.GetAllEmployees());
         }
 
@@ -38,7 +37,25 @@ namespace SynetecAssessmentApi.Controllers
                 return ErrorResponse();
 
             var totalSalary = _employeeService.GetTotalSalary();
-            var result = _bonusPoolService.Calculate(request.TotalBonusPoolAmount, totalSalary, employee);
+            var bonusAllocation = _bonusPoolService.Calculate(request.TotalBonusPoolAmount, totalSalary, employee.Salary);
+
+            var result = new BonusPoolCalculatorResultDto
+            {
+                Employee = new EmployeeDto
+                {
+                    Fullname = employee.Fullname,
+                    JobTitle = employee.JobTitle,
+                    Salary = employee.Salary,
+                    Department = new DepartmentDto
+                    {
+                        Title = employee.Department.Title,
+                        Description = employee.Department.Description
+                    }
+                },
+
+                Amount = bonusAllocation
+            };
+
             return Ok(result);
         }
 

@@ -9,6 +9,6 @@ namespace SynetecAssessmentApi.Contracts
 {
     public interface IBonusPoolService
     {
-        BonusPoolCalculatorResultDto Calculate(int bonusPoolAmount, int totalSalary, Employee employee);
+        int Calculate(int bonusPoolAmount, int totalSalary, int employeeSalary);
     }
 }
