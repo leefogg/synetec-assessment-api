@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SynetecAssessmentApi.Contracts;
 using SynetecAssessmentApi.Domain;
 using SynetecAssessmentApi.Dtos;
 using SynetecAssessmentApi.Persistence;
@@ -8,16 +9,13 @@ using System.Threading.Tasks;
 
 namespace SynetecAssessmentApi.Services
 {
-    public class BonusPoolService
+    public class BonusPoolService : IBonusPoolService
     {
         private readonly AppDbContext _dbContext;
 
-        public BonusPoolService()
+        public BonusPoolService(AppDbContext context)
         {
-            var dbContextOptionBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            dbContextOptionBuilder.UseInMemoryDatabase(databaseName: "HrDb");
-
-            _dbContext = new AppDbContext(dbContextOptionBuilder.Options);
+            _dbContext = context;
         }
 
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync()
